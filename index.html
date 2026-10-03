@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis - Asisten Pribadi Cerdas</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --border: #e2e8f0;
+      --accent-green: #10b981;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+    
+    /* Hero */
+    .hero { text-align: center; padding: 3rem 0; }
+    .avatar { width: 72px; height: 72px; background: #eff6ff; color: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1rem; border: 2px solid #bfdbfe; }
+    .status-badge { display: inline-flex; align-items: center; gap: 6px; background: #ecfdf5; color: #047857; padding: 4px 12px; border-radius: 999px; font-size: 0.85rem; font-weight: 500; border: 1px solid #a7f3d0; margin-bottom: 1rem; }
+    .status-dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--accent-green); }
+    .hero h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
+    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+    /* Cards & Layout */
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); }
+    .section-title { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 1rem; text-align: center; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+
+    /* Chaos vs Solution */
+    .bad { border-top: 4px solid #ef4444; }
+    .good { border-top: 4px solid var(--accent-green); }
+    .list-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.95rem; }
+
+    /* Interactive Chat */
+    .chat-box { background: #f1f5f9; border-radius: 8px; padding: 1rem; height: 190px; overflow-y: auto; margin-bottom: 1rem; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.75rem; }
+    .msg { padding: 8px 14px; border-radius: 8px; font-size: 0.9rem; max-width: 85%; }
+    .msg-user { background: var(--primary); color: white; align-self: flex-end; }
+    .msg-ai { background: #fff; color: var(--text-main); align-self: flex-start; border: 1px solid var(--border); }
+    .scenario-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .btn-scenario { background: #fff; border: 1px solid var(--border); color: var(--text-main); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
+    .btn-scenario:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Footer & CTA */
+    .cta-section { text-align: center; margin-top: 3rem; padding: 2.5rem 1rem; background: #fff; border: 1px solid var(--border); border-radius: 12px; }
+    .btn-cta { display: inline-block; background: var(--primary); color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 1rem; transition: background 0.2s; margin-bottom: 1rem; }
+    .btn-cta:hover { background: var(--primary-hover); }
+    footer { text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HERO SECTION -->
+    <header class="hero">
+      <div class="avatar">⚙️</div><br>
+      <div class="status-badge"><span class="status-dot"></span> Status: Active & Ready 24/7</div>
+      <h1>Jarvis</h1>
+      <p>Asisten pribadi cerdas yang mengelola jadwal, prioritas, dan produktivitas harian Anda tanpa tumpang tindih.</p>
+    </header>
+
+    <!-- PROBLEM & SOLUTION CARD -->
+    <h2 class="section-title">Solusi untuk Produktivitas Anda</h2>
+    <div class="grid-2">
+      <div class="card bad">
+        <h3 style="color:#b91c1c; margin-bottom:0.75rem;">⚠️ The Chaos</h3>
+        <div class="list-item"><span>❌</span> Peran ganda membuat jadwal sering bertabrakan atau terlewat.</div>
+        <div class="list-item"><span>❌</span> Kesulitan menyusun skala prioritas harian yang jelas.</div>
+        <div class="list-item"><span>❌</span> Progres tugas tertunda sering terlupakan di tengah kesibukan.</div>
+      </div>
+      <div class="card good">
+        <h3 style="color:#047857; margin-bottom:0.75rem;">✨ The Solution</h3>
+        <div class="list-item"><span>✅</span> Pengaturan jadwal otomatis dengan validasi ketersediaan waktu.</div>
+        <div class="list-item"><span>✅</span> Bertindak sebagai <i>second brain</i> dan reminder tugas aktif.</div>
+        <div class="list-item"><span>✅</span> Prinsip konfirmasi penuh: tidak mengeksekusi tanpa persetujuan Anda.</div>
+      </div>
+    </div>
+
+    <!-- CORE CAPABILITIES -->
+    <h2 class="section-title">Fitur & Ekosistem Utama</h2>
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-size:1.5rem; margin-bottom:0.5rem;">📅</div>
+        <h4 style="margin-bottom:0.25rem;">Smart Scheduler</h4>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Terintegrasi Google Calendar untuk mendeteksi konflik dan mengunci slot waktu secara akurat.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:1.5rem; margin-bottom:0.5rem;">🧠</div>
+        <h4 style="margin-bottom:0.25rem;">Second Brain</h4>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Mencatat progres proyek di Google Docs/Drive dan menyusun daftar prioritas kerja Anda.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:1.5rem; margin-bottom:0.5rem;">🛡️</div>
+        <h4 style="margin-bottom:0.25rem;">Human-in-the-Loop</h4>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Memberikan opsi dan selalu meminta persetujuan via WhatsApp/Telegram sebelum eksekusi.</p>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE SIMULATION -->
+    <h2 class="section-title">Simulasi Percakapan Interaktif</h2>
+    <div class="card">
+      <div class="chat-box" id="chatBox">
+        <div class="msg msg-ai">Halo! Saya Jarvis. Klik salah satu skenario di bawah untuk melihat alur kerja saya.</div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">Pilih skenario:</p>
+      <div class="scenario-btns">
+        <button class="btn-scenario" onclick="runChat('Atur meeting besok jam 14.00 WIB', 'Jadwal jam 14.00 bentrok dengan Review Proyek. Ada slot kosong di jam 15.30 atau 16.00 WIB. Mau saya jadwalkan di salah satunya?')">1. Atur Jadwal (Cek Konflik)</button>
+        <button class="btn-scenario" onclick="runChat('Apa prioritas tugas saya hari ini?', 'Prioritas utama: 1) Finalisasi proposal klien A, 2) Laporan mingguan di Google Docs (progres 60%). Mau lanjut yang mana dulu?')">2. Cek Prioritas & Progres</button>
+        <button class="btn-scenario" onclick="runChat('Jadwalkan ulang ke jam 15.30', 'Baik, saya siapkan agenda: Jam 15.30 WIB. Apakah disetujui untuk langsung dimasukkan ke Google Calendar?')">3. Konfirmasi Eksekusi</button>
+      </div>
+    </div>
+
+    <!-- FOOTER & CTA -->
+    <div class="cta-section">
+      <h3 style="margin-bottom:0.5rem;">Ingin Produktivitas Tanpa Hambatan?</h3>
+      <p style="color:var(--text-muted); margin-bottom:1.25rem;">Hubungi saya untuk berdiskusi langsung mengenai implementasi Jarvis.</p>
+      <a href="https://wa.me/081234567890" class="btn-cta" target="_blank">Hubungi via WhatsApp</a>
+      <footer>Built with AI · AI Builder Bootcamp Showcase</footer>
+    </div>
+  </div>
+
+  <script>
+    function runChat(userMsg, aiMsg) {
+      const box = document.getElementById('chatBox');
+      box.innerHTML = '';
+      
+      const uDiv = document.createElement('div');
+      uDiv.className = 'msg msg-user';
+      uDiv.innerText = userMsg;
+      box.appendChild(uDiv);
+      box.scrollTop = box.scrollHeight;
+
+      const typing = document.createElement('div');
+      typing.className = 'msg msg-ai';
+      typing.innerText = 'Jarvis sedang mengetik...';
+      box.appendChild(typing);
+      box.scrollTop = box.scrollHeight;
+
+      setTimeout(() => {
+        typing.innerText = aiMsg;
+        box.scrollTop = box.scrollHeight;
+      }, 700);
+    }
+  </script>
+</body>
+</html>
