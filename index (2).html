@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harvis - Blueprint Asisten Pribadi AI</title>
+  <style>
+    :root {
+      --bg: #f8fafc; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+      --primary: #2563eb; --primary-hover: #1d4ed8; --border: #e2e8f0; --accent-green: #10b981;
+      --amber-bg: #fffbeb; --amber-text: #92400e; --amber-border: #fde68a;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -2px rgba(0,0,0,.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text-main); line-height: 1.6; }
+    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 3rem 0 1.5rem; }
+    .avatar { width: 72px; height: 72px; background: #eff6ff; color: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1rem; border: 2px solid #bfdbfe; }
+    .status-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--amber-bg); color: var(--amber-text); padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 500; border: 1px solid var(--amber-border); margin-bottom: 1rem; }
+    .status-dot { width: 8px; height: 8px; background: #f59e0b; border-radius: 50%; }
+    .hero h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -.025em; margin-bottom: .75rem; }
+    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; font-weight: 500; }
+
+    /* Blueprint steps */
+    .step { display: flex; gap: 1rem; align-items: baseline; margin: 2.75rem 0 1rem; }
+    .step-no { flex: none; width: 2.4rem; height: 2.4rem; border-radius: 8px; background: var(--primary); color: #fff; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+    .step h2 { font-size: 1.35rem; font-weight: 700; }
+    .section-title { font-size: 1.35rem; font-weight: 700; margin: 2.75rem 0 1rem; }
+    .lead { color: var(--text-muted); margin-bottom: 1rem; max-width: 70ch; }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+    .bad { border-top: 4px solid #ef4444; }
+    .good { border-top: 4px solid var(--accent-green); }
+    .card h3 { margin-bottom: .75rem; font-size: 1.05rem; }
+    .list-item { display: flex; align-items: flex-start; gap: .5rem; margin-bottom: .6rem; font-size: .95rem; }
+    .agent h4 { font-size: .98rem; margin-bottom: .25rem; }
+    .agent p { font-size: .88rem; color: var(--text-muted); }
+    .agent.lead-agent { border-color: #bfdbfe; background: #eff6ff; }
+    .rhythm { list-style: none; }
+    .rhythm li { padding: .55rem 0; border-bottom: 1px solid #f1f5f9; font-size: .95rem; }
+    .rhythm li:last-child { border-bottom: 0; }
+    .rhythm b { display: inline-block; min-width: 9.5rem; color: var(--primary); }
+    .note { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber-text); border-radius: 8px; padding: .75rem 1rem; font-size: .9rem; margin-top: 1rem; }
+    .metric-no { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+
+    /* Chat */
+    .chat-box { background: #f1f5f9; border-radius: 8px; padding: 1rem; height: 190px; overflow-y: auto; margin-bottom: 1rem; border: 1px solid var(--border); display: flex; flex-direction: column; gap: .75rem; }
+    .msg { padding: 8px 14px; border-radius: 8px; font-size: .9rem; max-width: 85%; }
+    .msg-user { background: var(--primary); color: #fff; align-self: flex-end; }
+    .msg-ai { background: #fff; border: 1px solid var(--border); align-self: flex-start; }
+    .scenario-btns { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .btn-scenario { background: #fff; border: 1px solid var(--border); color: var(--text-main); padding: 8px 12px; border-radius: 6px; font-size: .85rem; font-weight: 500; cursor: pointer; }
+    .btn-scenario:hover { border-color: var(--primary); color: var(--primary); }
+
+    .cta-section { text-align: center; margin-top: 2.5rem; padding: 2.5rem 1rem; background: #fff; border: 1px solid var(--border); border-radius: 12px; }
+    .btn-cta { display: inline-block; background: var(--primary); color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 600; margin-bottom: 1rem; }
+    .btn-cta:hover { background: var(--primary-hover); }
+    footer { text-align: center; margin-top: 1rem; color: var(--text-muted); font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="hero">
+      <div class="avatar" aria-hidden="true">⚙️</div><br>
+      <div class="status-badge"><span class="status-dot"></span> Tahap blueprint, belum dibangun</div>
+      <h1>Harvis</h1>
+      <p>Asisten pribadi AI untuk satu orang dengan banyak peran: jadwal rapi, prioritas jelas, tidak ada yang terlupa.</p>
+    </header>
+
+    <!-- 01 -->
+    <div class="step"><span class="step-no">1</span><h2>Nama sistem</h2></div>
+    <div class="card">
+      <p><b>Harvis</b> adalah asisten pribadi berbasis AI, seperti Jarvis bagi Iron Man, tetapi untuk keseharian saya. Saya menghubunginya lewat Telegram, dengan teks atau voice note.</p>
+    </div>
+
+    <!-- 02 -->
+    <div class="step"><span class="step-no">2</span><h2>Masalah yang ingin ditangani</h2></div>
+    <p class="lead">Saya memegang tiga tanggung jawab di kantor (dua tim statistik dan pengadaan), menjadi ayah dari anak berusia 6 tahun dan kepala rumah tangga, serta membangun bisnis produk digital sambil belajar menjadi AI engineer. Semua tugas dan jadwal hanya ada di kepala.</p>
+    <div class="grid-2">
+      <div class="card bad">
+        <h3 style="color:#b91c1c;">Yang terjadi sekarang</h3>
+        <div class="list-item"><span>❌</span> Bingung harus mulai dari mana, terutama saat mulai kerja di pagi hari dan saat tiba di rumah di sore hari.</div>
+        <div class="list-item"><span>❌</span> Sulit menentukan mana yang paling penting.</div>
+        <div class="list-item"><span>❌</span> Tugas terlupa karena hanya tersimpan di kepala.</div>
+        <div class="list-item"><span>❌</span> Jadwal berantakan; kalender hanya dipakai sesekali.</div>
+      </div>
+      <div class="card good">
+        <h3 style="color:#047857;">Yang Harvis lakukan</h3>
+        <div class="list-item"><span>✅</span> Semua urusan masuk lewat satu tempat: pesan atau voice note di Telegram.</div>
+        <div class="list-item"><span>✅</span> Dua ringkasan harian: tiga prioritas dan satu langkah pertama yang jelas.</div>
+        <div class="list-item"><span>✅</span> Pengingat rutin rumah tangga berjalan otomatis.</div>
+        <div class="list-item"><span>✅</span> Perubahan kalender dan pesan ke orang lain selalu minta persetujuan dulu.</div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="step"><span class="step-no">3</span><h2>Agen berjalan sendiri atau dalam tim?</h2></div>
+    <div class="card">
+      <p><b>Dalam tim.</b> Satu koordinator menjadi satu-satunya yang berbicara dengan saya, dibantu agen khusus untuk tiap bidang. Harvis menyarankan; keputusan akhir tetap di tangan saya.</p>
+    </div>
+
+    <!-- 04 -->
+    <div class="step"><span class="step-no">4</span><h2>Anggota tim dan pola kerjanya</h2></div>
+    <div class="grid-3">
+      <div class="card agent lead-agent"><h4>Koordinator</h4><p>Menerima semua pesan, menentukan bidangnya, meneruskan ke agen yang tepat, dan memutuskan mana yang didahulukan bila beberapa bidang bersaing.</p></div>
+      <div class="card agent"><h4>Perencana</h4><p>Menyusun rencana harian (maksimal 3 prioritas) dan mengatur jadwal di kalender.</p></div>
+      <div class="card agent"><h4>Agen Survei</h4><p>Mengingat kegiatan, tenggat, dan progres di dua tim statistik.</p></div>
+      <div class="card agent"><h4>Agen Pengadaan</h4><p>Mengingat tahapan, tenggat, vendor, dan kelengkapan dokumen pengadaan.</p></div>
+      <div class="card agent"><h4>Agen Rumah Tangga</h4><p>Pengingat rutin: isi token listrik, antar laundry, beres-beres rumah.</p></div>
+      <div class="card agent"><h4>Agen Keluarga</h4><p>Menjaga waktu bersama anak, kebiasaan baik yang ingin dibangun, dan catatan minatnya.</p></div>
+      <div class="card agent"><h4>Agen Bisnis &amp; Belajar</h4><p>Mengawal proyek produk digital dan rencana belajar AI.</p></div>
+      <div class="card agent"><h4>Peninjau</h4><p>Merangkum perkembangan mingguan dan menantang keputusan penting yang berdasar asumsi lemah.</p></div>
+    </div>
+
+    <div class="card" style="margin-top:1.25rem;">
+      <h3>Ritme kerja</h3>
+      <ul class="rhythm">
+        <li><b>Pagi, mulai kerja</b> 3 hal terpenting hari ini dan satu langkah pertama.</li>
+        <li><b>Sore, tiba di rumah</b> Apa yang wajib diurus malam ini dan apa yang boleh ditunda.</li>
+        <li><b>Sepanjang hari</b> Saya kirim pesan atau voice note; Harvis mencatat dan menempatkannya di bidang yang sesuai.</li>
+        <li><b>Malam</b> Tinjauan singkat: apa yang selesai, apa yang bergeser.</li>
+        <li><b>Setiap minggu</b> Tinjauan mingguan dan catatan kemajuan.</li>
+      </ul>
+      <div class="note"><b>Batas kewenangan:</b> Harvis boleh memberi saran dan membuat pengingat sendiri. Mengirim pesan ke orang lain atau mengubah kalender hanya setelah saya setujui lewat tombol konfirmasi.</div>
+    </div>
+
+    <!-- 05 -->
+    <div class="step"><span class="step-no">5</span><h2>Hal yang perlu disimpan di memori</h2></div>
+    <div class="grid-2">
+      <div class="card good">
+        <h3>Disimpan</h3>
+        <div class="list-item"><span>•</span> Tujuan di tiap bidang dan tanda tercapainya</div>
+        <div class="list-item"><span>•</span> Tugas yang masih terbuka beserta tenggatnya</div>
+        <div class="list-item"><span>•</span> Jadwal rutin rumah tangga</div>
+        <div class="list-item"><span>•</span> Keputusan penting beserta alasannya</div>
+        <div class="list-item"><span>•</span> Kebiasaan kerja saya: jam paling fokus, hal yang sering ditunda</div>
+        <div class="list-item"><span>•</span> Perkembangan proyek bisnis dan belajar AI</div>
+        <div class="list-item"><span>•</span> Catatan tentang anak: minat dan kebiasaan yang sedang dibangun</div>
+        <div class="list-item"><span>•</span> Catatan mingguan untuk mengukur manfaat Harvis</div>
+      </div>
+      <div class="card bad">
+        <h3>Sengaja tidak disimpan</h3>
+        <div class="list-item"><span>•</span> Isi data survei</div>
+        <div class="list-item"><span>•</span> Dokumen vendor dan pengadaan</div>
+        <div class="list-item"><span>•</span> Informasi rahasia kantor</div>
+        <p style="font-size:.9rem; color:var(--text-muted); margin-top:.5rem;">Harvis hanya mencatat status tugas, misalnya "laporan survei, tenggat Jumat", bukan isinya.</p>
+      </div>
+    </div>
+
+    <!-- Pengukuran -->
+    <h2 class="section-title">Cara mengukur keberhasilan</h2>
+    <p class="lead">Setiap minggu saya mencatat tiga hal. Minggu pertama dicatat tanpa Harvis sebagai pembanding, supaya perubahan setelahnya bisa dibuktikan.</p>
+    <div class="grid-3">
+      <div class="card"><div class="metric-no">1</div><p style="font-size:.92rem;">Jumlah tugas yang lewat tenggat tanpa disentuh</p></div>
+      <div class="card"><div class="metric-no">2</div><p style="font-size:.92rem;">Hari (dari lima hari kerja) dengan rencana harian yang benar-benar dijalankan</p></div>
+      <div class="card"><div class="metric-no">3</div><p style="font-size:.92rem;">Tingkat bingung saat memulai di pagi dan sore hari, skala 1 sampai 5</p></div>
+    </div>
+    <div class="note">Rencana pembangunan bertahap: mulai dari satu agen dengan dua ringkasan harian dan catatan mingguan, lalu tambah agen khusus hanya bila terbukti perlu.</div>
+
+    <!-- Simulasi -->
+    <h2 class="section-title">Ilustrasi percakapan (simulasi)</h2>
+    <p class="lead">Contoh berikut hanya simulasi untuk menggambarkan alur kerja. Harvis belum dibangun, dan datanya fiktif.</p>
+    <div class="card">
+      <div class="chat-box" id="chatBox" aria-live="polite">
+        <div class="msg msg-ai">Halo, saya Harvis. Pilih salah satu skenario di bawah untuk melihat alurnya.</div>
+      </div>
+      <div class="scenario-btns">
+        <button class="btn-scenario" data-u="Harvis, saya baru sampai kantor. Mulai dari mana?" data-a="Tiga prioritas hari ini: 1) Laporan survei, tenggat Jumat. 2) Dokumen pengadaan menunggu tindak lanjut. 3) Balas vendor. Langkah pertama: buka draf laporan dan selesaikan bagian ringkasan, sekitar 30 menit.">1. Mulai kerja pagi hari</button>
+        <button class="btn-scenario" data-u="Saya baru sampai rumah." data-a="Wajib malam ini: antar laundry dan isi token listrik (pengingat rutin minggu ini). Sisihkan 30 menit bersama anak sebelum tidur. Bisnis dan belajar AI opsional, boleh ditunda ke akhir pekan.">2. Tiba di rumah sore hari</button>
+        <button class="btn-scenario" data-u="Geser rapat besok ke jam 15.30." data-a="Saya siapkan perubahan: rapat dipindah dari 14.00 ke 15.30. Slot itu kosong. Setujui perubahan ke kalender? [Ya] [Tidak]">3. Ubah jadwal (minta persetujuan)</button>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h3 style="margin-bottom:.5rem;">Ingin berdiskusi tentang Harvis?</h3>
+      <p style="color:var(--text-muted); margin-bottom:1.25rem;">Hubungi saya untuk bertukar ide tentang rancangan ini.</p>
+      <!-- Ganti USERNAME_TELEGRAM dengan username Telegram Anda -->
+      <a href="https://t.me/USERNAME_TELEGRAM" class="btn-cta" target="_blank" rel="noopener">Hubungi via Telegram</a>
+      <footer>Built with AI · AI Builder Bootcamp Showcase</footer>
+    </div>
+  </div>
+
+  <script>
+    /* Simulasi chat */
+    document.querySelectorAll('.btn-scenario').forEach(function (btn) {
+      btn.addEventListener('click', function () { runChat(btn.dataset.u, btn.dataset.a); });
+    });
+    function runChat(userMsg, aiMsg) {
+      const box = document.getElementById('chatBox');
+      box.replaceChildren();
+      const u = document.createElement('div');
+      u.className = 'msg msg-user'; u.textContent = userMsg; box.appendChild(u);
+      const t = document.createElement('div');
+      t.className = 'msg msg-ai'; t.textContent = 'Harvis sedang mengetik...'; box.appendChild(t);
+      box.scrollTop = box.scrollHeight;
+      setTimeout(function () { t.textContent = aiMsg; box.scrollTop = box.scrollHeight; }, 700);
+    }
+
+  </script>
+</body>
+</html>
